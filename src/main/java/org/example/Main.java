@@ -27,6 +27,7 @@ public class Main {
             texts[i] = generateText("abc", 3 + random.nextInt(3));
         }
         int a = getOneLetterCount(texts);
+        count3.set(a);
 
     }
 
