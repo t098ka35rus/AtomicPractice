@@ -26,7 +26,7 @@ public class Main {
         for (int i = 0; i < texts.length; i++) {
             texts[i] = generateText("abc", 3 + random.nextInt(3));
         }
-        int a = getPalCount(texts);
+        int a = getOneLetterCount(texts);
 
     }
 
@@ -41,15 +41,16 @@ public class Main {
     public static int getPalCount (String [] texts){
         int result = 0;
         boolean check;
+        boolean check1;
         for (int i = 0; i < texts.length; i++) {
             String s = texts[i];
             check = true;
-                 for (int j = 1; j < s.length() - 2 ; j++) {
+            for (int j = 1; j < s.length() - 2 ; j++) {
                     if (s.charAt(j) != s.charAt(j + 1)){
                         check = false;
                     }
                 }
-            if (check == true && s.charAt(0) == s.charAt(s.length() - 1)){
+            if (check == true && s.charAt(0) == s.charAt(s.length() - 1) && s.charAt(0) != s.charAt(1)){
                 result ++;
                 System.out.println("s = " + s + ";" + "result = " + result);
             }
@@ -62,9 +63,26 @@ public class Main {
 
     }
 
-    public static int getOneLetterCount (int length,String [] text){
-        return 0;
-    } public static int getStairsCount (int length,String [] text){
+    public static int getOneLetterCount (String [] texts){
+        int result = 0;
+        boolean check;
+        for (int t = 0; t < texts.length; t++) {
+            check = true;
+            String s = texts[t];
+            for (int i = 0; i < s.length() - 1; i++) {
+                if (s.charAt(i) != s.charAt(i + 1)){
+                    check = false;
+                }
+            }
+            if (check == true){
+                result ++;
+                System.out.println("one letter = " + s + ";" + "result = " + result);
+            }
+        }
+        return result;
+
+    }
+    public static int getStairsCount (int length,String [] text){
         return 0;
     }
 
