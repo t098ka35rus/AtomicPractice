@@ -1,7 +1,6 @@
 package org.example;
 
-import java.util.HashMap;
-import java.util.Map;
+
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -9,14 +8,7 @@ public class Main {
     static AtomicInteger count3;
     static AtomicInteger count4;
     static AtomicInteger count5;
-    static Map<Integer,String> alphabetMap = new HashMap<Integer, String>() {
-        {
 
-            for (char ch = 'a'; ch <= 'z'; ++ch)
-                put((int) ch, String.valueOf(ch));
-
-        }
-    };
 
 
     public static void main(String[] args) {
@@ -26,8 +18,8 @@ public class Main {
         for (int i = 0; i < texts.length; i++) {
             texts[i] = generateText("abc", 3 + random.nextInt(3));
         }
-        int a = getOneLetterCount(texts);
-        count3.set(a);
+        int a = getTwinsCount(texts);
+
 
     }
 
@@ -44,48 +36,63 @@ public class Main {
         boolean check;
         boolean check1;
         for (int i = 0; i < texts.length; i++) {
+            check = true;
+            String a = "";
+            String b = null;
             String s = texts[i];
-            check = true;
-            for (int j = 1; j < s.length() - 2 ; j++) {
-                    if (s.charAt(j) != s.charAt(j + 1)){
-                        check = false;
-                    }
+            System.out.println("s = " + s);
+
+            if (s.length()%2 == 0){
+                for (int j = 0; j < s.length()/2 - 1; j++) {
+                    a = a + s.charAt(j);
                 }
-            if (check == true && s.charAt(0) == s.charAt(s.length() - 1) && s.charAt(0) != s.charAt(1)){
-                result ++;
-                System.out.println("s = " + s + ";" + "result = " + result);
+                System.out.println( "a = " + a);
+                for (int j = s.length() - 1; j > s.length()/2 + 1; j--) {
+                    b = "" + s.charAt(j);;
+
+                }
+                System.out.println("b = " + b);
+                if (a.equals(b)){
+                    result ++;
+                    System.out.println("PAL = " + s + ";" + "result = " + result);
+                }
             }
-
-
-
         }
 
         return result;
 
     }
 
-    public static int getOneLetterCount (String [] texts){
+    public static int getTwinsCount (String [] texts){
         int result = 0;
-        boolean check;
         for (int t = 0; t < texts.length; t++) {
-            check = true;
             String s = texts[t];
-            for (int i = 0; i < s.length() - 1; i++) {
-                if (s.charAt(i) != s.charAt(i + 1)){
-                    check = false;
-                }
+            if (getTwinsCheck(s)){
+               result ++;
+               System.out.println("TWINS = " + s + ";" + "result = " + result);
             }
-            if (check == true){
-                result ++;
-                System.out.println("one letter = " + s + ";" + "result = " + result);
-            }
+
         }
         return result;
 
     }
-    public static int getStairsCount (int length,String [] text){
+    public static int getStairsCount (String [] text){
         return 0;
     }
+    public static boolean getPalCheck (String s){
+        return true;
+    }
+    public static boolean getTwinsCheck (String s){
+            for (int i = 0; i < s.length() - 1; i++) {
+            if (s.charAt(i) != s.charAt(i + 1)){
+                return false;
+            }
+        }
+        return true;
+    }
 
+    public static boolean getStairsCheck (String s){
+        return true;
+    }
 
 }
