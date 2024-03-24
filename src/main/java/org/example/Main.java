@@ -18,19 +18,54 @@ public class Main {
         for (int i = 0; i < texts.length; i++) {
             texts[i] = generateText("abc", 3 + random.nextInt(3));
         }
-        new Thread(() -> {
-            for (int i = 3; i < 6; i++) {
-                count3.addAndGet(getCount(texts, "pal", i));
+        new Thread(() -> {//pal
+            for (String s : texts) {
+                if (getPalCheck(s)) {
+                    if (s.length() == 3) {
+                        count3.getAndIncrement();
+                    }
+                    if (s.length() == 4) {
+                        count4.getAndIncrement();
+                    }
+                    if (s.length() == 5) {
+                        count5.getAndIncrement();
+                    }
+
+                }
             }
+
         }).start();
         new Thread(() -> {
-            for (int i = 3; i < 6; i++) {
-                count4.addAndGet(getCount(texts, "twins", i));
+            for (String s : texts) {
+                if (getTwinsCheck(s)) {
+                    if (s.length() == 3) {
+                        count3.getAndIncrement();
+                    }
+                    if (s.length() == 4) {
+                        count4.getAndIncrement();
+                    }
+                    if (s.length() == 5) {
+                        count5.getAndIncrement();
+                    }
+
+                }
             }
+
         }).start();
         new Thread(() -> {
-            for (int i = 3; i < 6; i++) {
-                count5.addAndGet(getCount(texts, "stairs", i));
+            for (String s : texts) {
+                if (getStairsCheck(s)) {
+                    if (s.length() == 3) {
+                        count3.getAndIncrement();
+                    }
+                    if (s.length() == 4) {
+                        count4.getAndIncrement();
+                    }
+                    if (s.length() == 5) {
+                        count5.getAndIncrement();
+                    }
+
+                }
             }
         }).start();
 
@@ -51,81 +86,36 @@ public class Main {
 
     }
 
-    public static boolean getCheck(String s, String mode) {
+    public static boolean getPalCheck(String s) {
+        int max;
+        if (s.length() % 2 == 0) {
+            max = s.length() / 2;
+        } else max = (s.length() - 1) / 2;
 
-        switch (mode) {
-            case ("pal"):
-                int max;
-                if (s.length() % 2 == 0) {
-                    max = s.length() / 2;
-                } else max = (s.length() - 1) / 2;
-
-                for (int i = 0; i < max; i++) {
-                    if (s.charAt(i) != s.charAt((s.length() - 1) - i)) {
-                        return false;
-                    }
-                }
-                return true;
-            case ("twins"):
-                for (int i = 0; i < s.length() - 1; i++) {
-                    if (s.charAt(i) != s.charAt(i + 1)) {
-                        return false;
-                    }
-                }
-                return true;
-            case ("stairs"):
-                for (int i = 0; i < s.length() - 1; i++) {
-                    if (!(s.charAt(i + 1) >= s.charAt(i))) {
-                        return false;
-                    }
-                }
-                return true;
+        for (int i = 0; i < max; i++) {
+            if (s.charAt(i) != s.charAt((s.length() - 1) - i)) {
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 
-    public static int getCount(String[] texts, String mode, int length) {
-        switch (mode) {
-
-            case ("pal"):
-                int result = 0;
-                for (String s : texts) {
-                    if (s.length() != length) {
-                        continue;
-                    }
-                    if (getCheck(s, "pal")) {
-                        result++;
-                    }
-
-                }
-                return result;
-
-            case ("twins"):
-                int result1 = 0;
-                for (String s : texts) {
-                    if (s.length() != length) {
-                        continue;
-                    }
-                    if (getCheck(s, "twins")) {
-                        result1++;
-                    }
-
-                }
-                return result1;
-            case ("stairs"):
-                int result2 = 0;
-                for (String s : texts) {
-                    if (s.length() != length) {
-                        continue;
-                    }
-                    if (getCheck(s, "stairs")) {
-                        result2++;
-                    }
-
-                }
-                return result2;
+    public static boolean getTwinsCheck(String s) {
+        for (int i = 0; i < s.length() - 1; i++) {
+            if (s.charAt(i) != s.charAt(i + 1)) {
+                return false;
+            }
         }
-        return 0;
+        return true;
+    }
+
+    public static boolean getStairsCheck(String s) {
+        for (int i = 0; i < s.length() - 1; i++) {
+            if (!(s.charAt(i + 1) >= s.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
